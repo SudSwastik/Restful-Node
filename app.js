@@ -1,14 +1,28 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
+const db = mongoose.connect('mongodb://localhost/bookAPI', {useNewUrlParser: true} );
 const bookRouter = express.Router();
+const Book = require('./model/bookModel');
 const port = process.env.PORT || 3000;
 
 bookRouter.route('/books')
   .get((req, res) => {
-    const response = { Hello: 'World' };
-    res.json(response);
+    const query = {};
+    if (req.query.genre) {
+      query.genre = req.query.genre;
+    }
+
+    Book.find(query, (err, books) => {
+      if(err) {
+        return res.send(err);
+      }
+      return res.json(books);
+    }
+
+    );
   });
-  
+
 app.use('/api', bookRouter);
 
 app.get('/', (req, res) => {

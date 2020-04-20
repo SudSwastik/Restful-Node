@@ -11,3 +11,9 @@ $ npm i eslint -D
 ```
 $ npm run lint
 ```
+
+>Insert Data into Mongo Collection
+- Mongod Should be running
+```
+$ mongo bookAPI < booksJson.js
+```
